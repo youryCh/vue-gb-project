@@ -6,19 +6,21 @@
       <input class="input" type="text" v-model="operand2">
       = {{ result || 0 }}
     </div>
-    <div class="btns">
-      <button v-for="button in buttons" @click="calculate" :key="button">{{ button }}</button>
+    <div>
+      <button class="btns" v-for="button in buttons" @click="calculate" :key="button">{{ button }}</button>
     </div>
     <div class="errorMsg" v-if="error">
       {{ error }}
     </div>
     <label>
-      <input class="input_mg" type="checkbox" v-model="showKeybord">
+      <input class="input_mg" type="checkbox" v-model="showKeyboard">
       Отобразить экранную клавиатуру
     </label>
-    <div class="btns" v-if="showKeybord">
-      <button v-for="key in keys" @click="addNumber" :key="key">{{ key }}</button>
-      <button @click="clearInput">&#8592;</button>
+    <div v-if="showKeyboard">
+      <div class="keyboard">
+        <button v-for="key in keys" @click="addNumber" :key="key">{{ key }}</button>
+        <button class="clearButton" @click="clearInput">&#8592;</button>
+      </div>
       <br>
       <input type="radio" name="operand" id="op1" value="operand1" v-model="checkedOperand">
       <label for="op1">Операнд 1</label>
@@ -37,8 +39,8 @@ export default {
     operand2: '',
     result: '',
     operator: '',
-    showKeybord: false,
-    keys: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    showKeyboard: false,
+    keys: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
     checkedOperand: 'operand1',
     error: ''
   }),
@@ -47,10 +49,8 @@ export default {
       this.operator = e.target.innerHTML
       this.operand1 = Number(this.operand1)
       this.operand2 = Number(this.operand2)
-      console.log('ok1')
       switch (this.operator) {
         case '+':
-          console.log('ok')
           this.result = this.operand1 + this.operand2
           this.error = ''
           break
@@ -99,21 +99,28 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="sass">
-
 .input
   text-align: right
 
   &_mg
-    margin-top: 50px
+    margin: 50px 0 16px
 
 .btns
   margin-top: 8px
-
-button
   margin-left: 5px
 
 .errorMsg
   margin-top: 16px
   border: 1px dotted red
   color: red
+
+.keyboard
+  display: grid
+  grid-template: repeat(4, 1fr) / repeat(3, 50px)
+  justify-content: center
+  gap: 5px
+
+.clearButton
+  grid-column: 2 / 4
+
 </style>
