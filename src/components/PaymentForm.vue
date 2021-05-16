@@ -1,9 +1,16 @@
 <template>
   <div :class="[$style.paymentForm]">
-    <input :class="[$style.paymentForm__input]" type="text" placeholder="Payment date" v-model="date">
-    <input :class="[$style.paymentForm__input]" type="text" placeholder="Payment dascription" v-model="category">
-    <input :class="[$style.paymentForm__input]" type="text" placeholder="Payment amount" v-model.number="price">
-    <Button :text="formButtonText" @handler="save" />
+    <input :class="[$style.paymentForm__input]" placeholder="Payment date" v-model="date">
+    <select :class="[$style.paymentForm__input]" v-model="category">
+      <option disabled selected value="">Payment category</option>
+      <option v-for="category in categoryName"
+      :value="category"
+      :key="category">
+      {{ category }}
+      </option>
+    </select>
+    <input :class="[$style.paymentForm__input]" placeholder="Payment amount" v-model.number="price">
+    <Button :text="'ADD'" @handler="save" />
   </div>
 </template>
 
@@ -19,20 +26,33 @@ export default {
       date: '',
       category: '',
       price: null,
-      formButtonText: 'ADD'
+      categoryName: ['Food', 'Transport', 'Housing', 'Clothing', 'Education']
     }
   },
   methods: {
     save () {
-      const { date, category, price } = this
-      this.$emit('add', { date, category, price })
-      this.$parent.showForm = false
+      const data = {
+        date: this.date || this.getCurrentDate,
+        category: this.category,
+        price: this.price
+      }
+      this.$emit('add', data)
       this.clearForm()
+      this.$parent.showForm = false
     },
     clearForm () {
       this.date = ''
       this.category = ''
       this.price = null
+    }
+  },
+  computed: {
+    getCurrentDate () {
+      const today = new Date()
+      const day = today.getDate()
+      const month = today.getMonth()
+      const year = today.getFullYear()
+      return `${day}.${month < 10 ? '0' + (month + 1) : month + 1}.${year}`
     }
   }
 }
@@ -42,9 +62,9 @@ export default {
   .paymentForm
     display: flex
     flex-direction: column
-    width: 50vw
+    width: 40vw
     position: fixed
-    left: 25vw
+    left: 30vw
     background-color: white
     border: 1px solid #e0e0e0
     border-radius: 5px
@@ -58,5 +78,6 @@ export default {
       margin-bottom: 10px
       outline: none
       padding: 8px
+      color: #6f6e6e
 
 </style>

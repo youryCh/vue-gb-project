@@ -4,7 +4,7 @@
       My personal costs
     </header>
     <main>
-      <Button @handler="isShowForm" :text="buttonText" />
+      <Button @handler="isShowForm" :text="'ADD NEW COST'" />
       <PaymentForm @add="dataAdd" v-show="showForm" />
       <PaymentsList :items="paymentsList" />
     </main>
@@ -25,7 +25,13 @@ export default {
   },
   data () {
     return {
-      paymentsList: [
+      paymentsList: [],
+      showForm: false
+    }
+  },
+  methods: {
+    fetchData () {
+      return [
         {
           date: '15.05.2021',
           category: 'Education',
@@ -46,18 +52,17 @@ export default {
           category: 'Education',
           price: 456
         }
-      ],
-      showForm: false,
-      buttonText: 'ADD NEW COST'
-    }
-  },
-  methods: {
+      ]
+    },
     dataAdd (data) {
       this.paymentsList.push(data)
     },
     isShowForm () {
       this.showForm = !this.showForm
     }
+  },
+  created () {
+    this.paymentsList = this.fetchData()
   }
 }
 </script>

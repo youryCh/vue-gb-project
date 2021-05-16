@@ -29,6 +29,7 @@ export default {
     border-radius: 3px
     position: relative
     color: white
+    outline: none
 
     &::after
       content: '+'

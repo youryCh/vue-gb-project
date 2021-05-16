@@ -4,7 +4,7 @@
       <h4>#</h4>
       <h4>Date</h4>
       <h4>Category</h4>
-      <h4>Value</h4>
+      <h4>Price</h4>
     </div>
     <div :class="[$style.payment]" v-for="(item, index) in items" :key="index">
       <div>{{ index + 1 }}</div>
@@ -18,7 +18,8 @@
 <script>
 export default {
   props: {
-    items: Array
+    items: Array,
+    default: []
   }
 }
 </script>
