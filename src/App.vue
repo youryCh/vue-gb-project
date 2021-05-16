@@ -33,19 +33,54 @@ export default {
     fetchData () {
       return [
         {
-          date: '15.05.2021',
+          date: '12.05.2021',
           category: 'Education',
-          price: 123
+          price: 456
         },
         {
-          date: '14.05.2021',
+          date: '12.05.2021',
           category: 'Education',
-          price: 234
+          price: 456
         },
         {
-          date: '13.05.2021',
+          date: '12.05.2021',
           category: 'Education',
-          price: 345
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
         },
         {
           date: '12.05.2021',
