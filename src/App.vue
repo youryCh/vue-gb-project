@@ -30,65 +30,6 @@ export default {
     }
   },
   methods: {
-    fetchData () {
-      return [
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        }
-      ]
-    },
     dataAdd (data) {
       this.paymentsList.push(data)
     },
@@ -97,7 +38,7 @@ export default {
     }
   },
   created () {
-    this.paymentsList = this.fetchData()
+    // this.paymentsList = this.fetchData()
   }
 }
 </script>

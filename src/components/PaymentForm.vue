@@ -16,6 +16,7 @@
 
 <script>
 import Button from './Button'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -30,6 +31,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setPaymentsListData'
+    ]),
     save () {
       const data = {
         date: this.date || this.getCurrentDate,
@@ -44,9 +48,41 @@ export default {
       this.date = ''
       this.category = ''
       this.price = null
+    },
+    fetchData () {
+      return [
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        }
+      ]
     }
   },
   computed: {
+    ...mapGetters([
+      'getPaymentsListFullPrice'
+    ]),
     getCurrentDate () {
       const today = new Date()
       const day = today.getDate()
@@ -54,6 +90,10 @@ export default {
       const year = today.getFullYear()
       return `${day}.${month < 10 ? '0' + (month + 1) : month + 1}.${year}`
     }
+  },
+  mounted () {
+    this.setPaymentsListData(this.fetchData())
+    // console.log(this.getPaymentsListFullPrice)
   }
 }
 </script>
