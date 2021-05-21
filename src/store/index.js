@@ -10,13 +10,36 @@ export default new Vuex.Store({
   mutations: {
     setPaymentsListData (state, payload) {
       state.paymentsList = payload
+    },
+    AddPaymentsListData (state, payload) {
+      state.paymentsList.push(payload)
     }
   },
   getters: {
     getPaymentsList: state => state.paymentsList,
-    getPaymentsListFullPrice: state => {
-      return state.paymentsList.reduce((acc, curr) => acc + curr.price, 0)
+    getPaymentsListLastId: state => {
+      return state.paymentsList.length
     }
   },
-  actions: {}
+  actions: {
+    fetchData ({ commit }) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const items = []
+          for (let i = 0; i < 32; i++) {
+            items.push({
+              id: i,
+              date: '12.05.2021',
+              category: 'Education',
+              price: 456
+            })
+          }
+          resolve(items)
+        }, 1000)
+      })
+        .then(res => {
+          commit('setPaymentsListData', res)
+        })
+    }
+  }
 })

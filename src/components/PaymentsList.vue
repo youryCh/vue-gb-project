@@ -8,61 +8,43 @@
         <h4>Price</h4>
       </div>
       <div :class="[$style.payment]" v-for="(item, index) in currentList" :key="index">
-        <div>{{ index + currentPages }}</div>
+        <div>{{ item.id + 1 }}</div>
         <div>{{ item.date }}</div>
         <div>{{ item.category }}</div>
         <div>{{ item.price }}</div>
       </div>
     </div>
-    <Pagination @prevPage="prevPage"
-    @nextPage="nextPage"
-    @currentList="showCurrentList"
-    :listLength="items.length" />
+    <Pagination  @currentList="showCurrentList"
+    :itemsOnPage="itemsOnPage"
+    :currentPage="currentPage" />
   </div>
 </template>
 
 <script>
 import Pagination from './Pagination'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
     Pagination
   },
-  props: {
-    items: Array
-  },
   data () {
     return {
-      currentList: [],
-      currentPages: 1
+      currentPage: 1,
+      itemsOnPage: 5
     }
   },
   methods: {
     showCurrentList (page) {
-      const pages = page * 5
-      this.currentList = this.items.slice((pages - 5), pages)
-      this.currentPages = pages - 4
-    },
-    prevPage () {
-      const page = Math.ceil(this.currentPages / 5)
-      if (page !== 1) {
-        this.showCurrentList(page - 1)
-      }
-    },
-    nextPage () {
-      const page = Math.ceil(this.currentPages / 5)
-      if (this.currentList.length === 5) {
-        this.showCurrentList(page + 1)
-      }
+      this.currentPage = page
     }
   },
-  mounted () {
-    this.currentList = this.items.slice(0, 5)
-  },
-  watch: {
-    items: function () {
-      const page = Math.ceil(this.currentPages / 5)
-      this.showCurrentList(page)
+  computed: {
+    ...mapGetters([
+      'getPaymentsList'
+    ]),
+    currentList () {
+      return this.getPaymentsList.slice(this.itemsOnPage * (this.currentPage - 1), this.itemsOnPage * this.currentPage)
     }
   }
 }

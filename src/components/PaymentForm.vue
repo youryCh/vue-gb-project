@@ -4,7 +4,6 @@
     <select :class="[$style.paymentForm__input]" v-model="category">
       <option disabled selected value="">Payment category</option>
       <option v-for="category in categoryName"
-      :value="category"
       :key="category">
       {{ category }}
       </option>
@@ -24,6 +23,7 @@ export default {
   },
   data () {
     return {
+      id: null,
       date: '',
       category: '',
       price: null,
@@ -32,15 +32,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setPaymentsListData'
+      'AddPaymentsListData'
     ]),
     save () {
       const data = {
+        id: this.getPaymentsListLastId,
         date: this.date || this.getCurrentDate,
         category: this.category,
         price: this.price
       }
-      this.$emit('add', data)
+      this.AddPaymentsListData(data)
       this.clearForm()
       this.$parent.showForm = false
     },
@@ -48,40 +49,11 @@ export default {
       this.date = ''
       this.category = ''
       this.price = null
-    },
-    fetchData () {
-      return [
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        }
-      ]
     }
   },
   computed: {
     ...mapGetters([
-      'getPaymentsListFullPrice'
+      'getPaymentsListLastId'
     ]),
     getCurrentDate () {
       const today = new Date()
@@ -90,10 +62,6 @@ export default {
       const year = today.getFullYear()
       return `${day}.${month < 10 ? '0' + (month + 1) : month + 1}.${year}`
     }
-  },
-  mounted () {
-    this.setPaymentsListData(this.fetchData())
-    // console.log(this.getPaymentsListFullPrice)
   }
 }
 </script>
