@@ -2,9 +2,11 @@
   <div id="app">
     <header :class="[$style.header]">
       My personal costs
-      <router-link to="/dashboard">Dashboard</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/404">404</router-link>
+      <div>
+        <router-link :class="[$style.routerLink]" to="/dashboard">Dashboard</router-link>
+        <router-link :class="[$style.routerLink]" to="/about">About</router-link>
+        <router-link :class="[$style.routerLink]" to="/404">404</router-link>
+      </div>
     </header>
     <main>
       <router-view />
@@ -13,11 +15,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'App',
-  data () {
-    return {
-    }
+  methods: {
+    ...mapActions([
+      'fetchData'
+    ])
+  },
+  created () {
+    this.fetchData()
   }
 }
 </script>
@@ -33,5 +40,15 @@ export default {
     color: #234567
     font-size: 24px
     margin-bottom: 8px
+    display: flex
+    flex-direction: column
+
+  .routerLink
+    margin-right: 10px
+    font-size: 16px
+    color: #234567
+
+    &:hover
+      color: #66bcc7
 
 </style>

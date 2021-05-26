@@ -10,7 +10,6 @@
 import PaymentsList from '../components/PaymentsList'
 import PaymentForm from '../components/PaymentForm'
 import Button from '../components/Button'
-import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -26,13 +25,7 @@ export default {
   methods: {
     isShowForm () {
       this.showForm = !this.showForm
-    },
-    ...mapActions([
-      'fetchData'
-    ])
-  },
-  mounted () {
-    this.fetchData()
+    }
   }
 }
 </script>

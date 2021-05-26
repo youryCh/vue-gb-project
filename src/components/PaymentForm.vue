@@ -1,5 +1,6 @@
 <template>
   <div :class="[$style.paymentForm]">
+    <div :class="[$style.close]" @click="clearForm">x</div>
     <input :class="[$style.paymentForm__input]" placeholder="Payment date" v-model="date">
     <select :class="[$style.paymentForm__input]" v-model="category">
       <option disabled selected value="">Payment category</option>
@@ -42,13 +43,12 @@ export default {
         price: this.price
       }
       this.AddPaymentsListData(data)
-      this.clearForm()
-      this.$parent.showForm = false
     },
     clearForm () {
       this.date = ''
       this.category = ''
       this.price = null
+      this.$parent.showForm = false
     }
   },
   computed: {
@@ -61,6 +61,15 @@ export default {
       const month = today.getMonth()
       const year = today.getFullYear()
       return `${day}.${month < 10 ? '0' + (month + 1) : month + 1}.${year}`
+    }
+  },
+  mounted () {
+    if (this.$route.name === 'addPayment') {
+      this.category = this.$route.params.category || ''
+      this.price = this.$route.query.value || null
+      if (this.category && this.price) {
+        setTimeout(() => this.save(), 10) // без этого костыля fetchData затирает это сохранение
+      }
     }
   }
 }
@@ -76,7 +85,9 @@ export default {
     background-color: white
     border: 1px solid #e0e0e0
     border-radius: 5px
-    padding: 8px
+    padding-left: 8px
+    padding-right: 8px
+    padding-bottom: 8px
     box-shadow: 5px 5px 20px #e0e0e0
 
     &__input
@@ -87,5 +98,10 @@ export default {
       outline: none
       padding: 8px
       color: #6f6e6e
+
+  .close
+    align-self: flex-end
+    color: #6f6e6e
+    cursor: pointer
 
 </style>
