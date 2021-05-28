@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Modal />
     <header :class="[$style.header]">
       My personal costs
       <div>
@@ -16,8 +17,13 @@
 
 <script>
 import { mapActions } from 'vuex'
+import Modal from './components/modalWindow/Modal'
+
 export default {
   name: 'App',
+  components: {
+    Modal
+  },
   methods: {
     ...mapActions([
       'fetchData'

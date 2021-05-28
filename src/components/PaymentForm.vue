@@ -48,7 +48,7 @@ export default {
       this.date = ''
       this.category = ''
       this.price = null
-      this.$parent.showForm = false
+      this.$modal.close()
     }
   },
   computed: {
@@ -80,6 +80,7 @@ export default {
     display: flex
     flex-direction: column
     width: 40vw
+    max-width: 400px
     position: fixed
     left: 30vw
     background-color: white
@@ -88,7 +89,6 @@ export default {
     padding-left: 8px
     padding-right: 8px
     padding-bottom: 8px
-    box-shadow: 5px 5px 20px #e0e0e0
 
     &__input
       height: 40px
