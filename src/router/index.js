@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import PageDashboard from '../page/PageDashboard'
-import PageAbout from '../page/PageAbout'
-import Page404 from '../page/Page404'
-import PaymentForm from '../components/PaymentForm'
-
 Vue.use(Router)
 
 const router = new Router({
@@ -14,22 +9,22 @@ const router = new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: PageDashboard
+      component: () => import('../page/PageDashboard')
     },
     {
       path: '/about',
       name: 'about',
-      component: PageAbout
+      component: () => import('../page/PageAbout')
     },
     {
       path: '/add/payment/:category*',
       name: 'addPayment',
-      component: PaymentForm
+      component: () => import('../components/PaymentForm')
     },
     {
       path: '*',
       name: 'NotFound',
-      component: Page404
+      component: () => import('../page/Page404')
     }
   ]
 })

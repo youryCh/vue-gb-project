@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Modal />
+    <Modal v-if="shown" :name="shown" />
     <header :class="[$style.header]">
       My personal costs
       <div>
@@ -17,20 +17,38 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Modal from './components/modalWindow/Modal'
 
 export default {
   name: 'App',
   components: {
-    Modal
+    Modal: () => import('./components/modalWindow/Modal')
+  },
+  data () {
+    return {
+      shown: ''
+    }
   },
   methods: {
     ...mapActions([
       'fetchData'
-    ])
+    ]),
+    onShow ({ name }) {
+      this.shown = name
+    },
+    onClose () {
+      this.shown = ''
+    }
   },
   created () {
     this.fetchData()
+  },
+  mounted () {
+    this.$modal.EventBus.$on('show', this.onShow)
+    this.$modal.EventBus.$on('close', this.onClose)
+  },
+  beforeDestroy () {
+    this.$modal.EventBus.$off('show', this.onShow)
+    this.$modal.EventBus.$off('close', this.onClose)
   }
 }
 </script>

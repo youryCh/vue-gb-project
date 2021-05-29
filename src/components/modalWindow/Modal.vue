@@ -1,7 +1,7 @@
 <template>
-  <div :class="[$style.wrapper]" v-if="shown">
+  <div :class="[$style.wrapper]">
     <div :class="[$style.content]">
-      <PaymentForm v-if="shown === 'PaymentForm'" />
+      <PaymentForm v-if="name === 'PaymentForm'" />
     </div>
   </div>
 </template>
@@ -13,22 +13,8 @@ export default {
   components: {
     PaymentForm
   },
-  data () {
-    return {
-      shown: ''
-    }
-  },
-  methods: {
-    onShow ({ name }) {
-      this.shown = name
-    },
-    onClose () {
-      this.shown = ''
-    }
-  },
-  mounted () {
-    this.$modal.EventBus.$on('show', this.onShow)
-    this.$modal.EventBus.$on('close', this.onClose)
+  props: {
+    name: String
   }
 }
 </script>
