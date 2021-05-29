@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <Modal v-if="shown" :name="shown" />
+    <transition name="fade">
+      <Modal v-if="shown" :name="shown" />
+    </transition>
     <header :class="[$style.header]">
       My personal costs
       <div>
@@ -74,5 +76,18 @@ export default {
 
     &:hover
       color: #66bcc7
+
+</style>
+
+<!-- сделал отдельный <style> т.к. :global похоже не работает с sass -->
+<style>
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
 
 </style>
