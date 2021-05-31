@@ -14,7 +14,8 @@ export default {
     PaymentForm
   },
   props: {
-    name: String
+    name: String,
+    settings: Object
   }
 }
 </script>

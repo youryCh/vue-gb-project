@@ -22,38 +22,58 @@ export default {
   components: {
     Button
   },
+  props: {
+    data: Number
+  },
   data () {
     return {
       id: null,
       date: '',
       category: '',
       price: null,
-      categoryName: ['Food', 'Transport', 'Housing', 'Clothing', 'Education']
+      categoryName: ['Food', 'Transport', 'Housing', 'Clothing', 'Education'],
+      edit: false
     }
   },
   methods: {
     ...mapMutations([
-      'AddPaymentsListData'
+      'AddPaymentsListData',
+      'updatePaymentsList'
     ]),
     save () {
-      const data = {
+      if (this.data) {
+        const data2 = {
+          id: this.id,
+          date: this.date,
+          category: this.category,
+          price: this.price
+        }
+        this.updatePaymentsList(this.currentPayment(data2))
+        return
+      }
+      const data1 = {
         id: this.getPaymentsListLastId,
         date: this.date || this.getCurrentDate,
         category: this.category,
         price: this.price
       }
-      this.AddPaymentsListData(data)
+      this.AddPaymentsListData(data1)
     },
     clearForm () {
       this.date = ''
       this.category = ''
       this.price = null
       this.$modal.close()
+    },
+    currentPayment (id) {
+      const payment = this.getPaymentsList.filter(item => item.id === id)
+      return { ...payment[0] }
     }
   },
   computed: {
     ...mapGetters([
-      'getPaymentsListLastId'
+      'getPaymentsListLastId',
+      'getPaymentsList'
     ]),
     getCurrentDate () {
       const today = new Date()
@@ -71,6 +91,14 @@ export default {
         setTimeout(() => this.save(), 10) // без этого костыля fetchData затирает это сохранение
       }
     }
+    if (this.data) {
+      const { id, date, category, price } = this.currentPayment(this.data)
+      this.id = id
+      this.date = date
+      this.category = category
+      this.price = price
+    }
+    // this.updatePaymentsList(this.currentPayment(this.data))
   }
 }
 </script>

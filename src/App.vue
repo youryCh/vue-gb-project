@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="fade">
-      <Modal v-if="shown" :name="shown" />
+      <Modal v-if="shown" :name="shown" :settings="settings" />
     </transition>
     <header :class="[$style.header]">
       My personal costs
@@ -27,7 +27,8 @@ export default {
   },
   data () {
     return {
-      shown: ''
+      shown: '',
+      settings: {}
     }
   },
   methods: {
@@ -39,6 +40,9 @@ export default {
     },
     onClose () {
       this.shown = ''
+    },
+    onShowContext () {
+      this.showContext = true
     }
   },
   created () {

@@ -5,11 +5,11 @@ export default {
     }
     this.installed = true
 
-    Vue.prototype.$modal = {
+    Vue.prototype.$context = {
       EventBus: new Vue(),
 
-      show (name, settings) {
-        this.EventBus.$emit('show', { name, settings })
+      show () {
+        this.EventBus.$emit('show')
       },
       close () {
         this.EventBus.$emit('close')
