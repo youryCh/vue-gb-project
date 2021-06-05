@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <input class="input" type="text" v-model="operand1">
+      <input class="input" type="text" v-model="operand1" name="op1">
       {{ operator }}
-      <input class="input" type="text" v-model="operand2">
+      <input class="input" type="text" v-model="operand2" name="op2">
       = {{ result || 0 }}
     </div>
     <div>
-      <button class="btns" v-for="button in buttons" @click="calculate" :key="button">{{ button }}</button>
+      <button :name="button" class="btns" v-for="button in buttons" @click="calculate" :key="button">{{ button }}</button>
     </div>
     <div class="errorMsg" v-if="error">
       {{ error }}
@@ -18,7 +18,7 @@
     </label>
     <div v-if="showKeyboard">
       <div class="keyboard">
-        <button v-for="key in keys" @click="addNumber" :key="key">{{ key }}</button>
+        <button v-for="key in keys" :name="key" @click="addNumber" :key="key">{{ key }}</button>
         <button class="clearButton" @click="clearInput">&#8592;</button>
       </div>
       <br>
