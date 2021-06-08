@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.paymentForm]">
+  <!-- <div :class="[$style.paymentForm]">
     <div :class="[$style.close]" @click="clearForm">x</div>
     <input :class="[$style.paymentForm__input]" placeholder="Payment date" v-model="date">
     <select :class="[$style.paymentForm__input]" v-model="category">
@@ -10,29 +10,75 @@
       </option>
     </select>
     <input :class="[$style.paymentForm__input]" placeholder="Payment amount" v-model.number="price">
-    <Button :text="'ADD'" @handler="save" />
-  </div>
+    <v-btn
+      @click="save"
+      color="teal"
+      dark
+      small
+      depressed
+    >
+      ADD
+      <v-icon dark small>
+        mdi-plus
+      </v-icon>
+    </v-btn>
+  </div> -->
+  <form
+    class="overflow-hidden pa-2 white"
+  >
+    <v-text-field
+      v-model="date"
+      label="Payment date"
+    >
+    </v-text-field>
+    <v-select
+      v-model="category"
+      :items="categoryName"
+      label="Payment category"
+    >
+    </v-select>
+    <v-text-field
+      v-model="price"
+      label="Payment amount"
+    >
+    </v-text-field>
+
+    <v-btn
+    class="mr-2"
+      @click="save"
+      color="teal"
+      dark
+      depressed
+      small
+    >ADD</v-btn>
+    <v-btn
+      @click="clearForm"
+      color="teal"
+      dark
+      depressed
+      small
+    >CLEAR</v-btn>
+  </form>
 </template>
 
 <script>
-import Button from './Button'
+// import Button from './Button'
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Button
-  },
-  props: {
-    data: Number
-  },
+  // components: {
+  // },
+  // props: {
+  //   data: Number
+  // },
   data () {
     return {
       id: null,
       date: '',
       category: '',
       price: null,
-      categoryName: ['Food', 'Transport', 'Housing', 'Clothing', 'Education'],
-      edit: false
+      categoryName: ['Food', 'Transport', 'Housing', 'Clothing', 'Education']
+      // edit: false
     }
   },
   methods: {
@@ -41,34 +87,34 @@ export default {
       'updatePaymentsList'
     ]),
     save () {
-      if (this.data) {
-        const data2 = {
-          id: this.id,
-          date: this.date,
-          category: this.category,
-          price: this.price
-        }
-        this.updatePaymentsList(this.currentPayment(data2))
-        return
-      }
-      const data1 = {
+      // if (this.data) {
+      //   const data2 = {
+      //     id: this.id,
+      //     date: this.date,
+      //     category: this.category,
+      //     price: this.price
+      //   }
+      //   this.updatePaymentsList(this.currentPayment(data2))
+      //   return
+      // }
+      const data = {
         id: this.getPaymentsListLastId,
         date: this.date || this.getCurrentDate,
         category: this.category,
         price: this.price
       }
-      this.AddPaymentsListData(data1)
+      this.AddPaymentsListData(data)
     },
     clearForm () {
       this.date = ''
       this.category = ''
       this.price = null
-      this.$modal.close()
-    },
-    currentPayment (id) {
-      const payment = this.getPaymentsList.filter(item => item.id === id)
-      return { ...payment[0] }
+      // this.$modal.close()
     }
+    // currentPayment (id) {
+    //   const payment = this.getPaymentsList.filter(item => item.id === id)
+    //   return { ...payment[0] }
+    // }
   },
   computed: {
     ...mapGetters([
@@ -104,32 +150,33 @@ export default {
 </script>
 
 <style module lang="sass">
-  .paymentForm
-    display: flex
-    flex-direction: column
-    width: 40vw
-    max-width: 400px
-    position: fixed
-    left: 30vw
-    background-color: white
-    border: 1px solid #e0e0e0
-    border-radius: 5px
-    padding-left: 8px
-    padding-right: 8px
-    padding-bottom: 8px
+  // .paymentForm
+  //   z-index: 10
+  //   display: flex
+  //   flex-direction: column
+  //   width: 40vw
+  //   max-width: 400px
+  //   position: fixed
+  //   left: 30vw
+  //   background-color: white
+  //   border: 1px solid #e0e0e0
+  //   border-radius: 5px
+  //   padding-left: 8px
+  //   padding-right: 8px
+  //   padding-bottom: 8px
 
-    &__input
-      height: 40px
-      border: 1px solid #e0e0e0
-      border-radius: 3px
-      margin-bottom: 10px
-      outline: none
-      padding: 8px
-      color: #6f6e6e
+  //   &__input
+  //     height: 40px
+  //     border: 1px solid #e0e0e0
+  //     border-radius: 3px
+  //     margin-bottom: 10px
+  //     outline: none
+  //     padding: 8px
+  //     color: #6f6e6e
 
-  .close
-    align-self: flex-end
-    color: #6f6e6e
-    cursor: pointer
+  // .close
+  //   align-self: flex-end
+  //   color: #6f6e6e
+  //   cursor: pointer
 
 </style>

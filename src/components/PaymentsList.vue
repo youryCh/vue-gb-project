@@ -1,78 +1,89 @@
 <template>
-  <div>
-    <transition name="fade">
-      <Context v-if="isShowContext" :id="id"  />
-    </transition>
-    <div :class="[$style.paymentsList]">
-      <div :class="[$style.payment]">
-        <h4>#</h4>
-        <h4>Date</h4>
-        <h4>Category</h4>
-        <h4>Price</h4>
-      </div>
-      <div :class="[$style.payment]" v-for="(item, index) in currentList" :key="index">
-        <div>{{ item.id + 1 }}</div>
-        <div>{{ item.date }}</div>
-        <div>{{ item.category }}</div>
-        <div>{{ item.price }}</div>
-        <div @click="showContext">...</div>
-      </div>
-    </div>
-    <Pagination  @currentList="showCurrentList"
-    :itemsOnPage="itemsOnPage"
-    :currentPage="currentPage" />
+  <div
+    @contextmenu="show"
+  >
+    <v-data-table
+      :headers="tableHeaders"
+      :items="getPaymentsList"
+    >
+    </v-data-table>
+    <v-menu
+      v-model="showMenu"
+      :position-x="x"
+      :position-y="y"
+      absolute
+      offset-y
+    >
+      <v-list>
+        <v-list-item>Edit</v-list-item>
+        <v-list-item>Delete</v-list-item>
+      </v-list>
+    </v-menu>
   </div>
 </template>
 
 <script>
-import Pagination from './Pagination'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Pagination,
-    Context: () => import('./contextMenu/Context')
-  },
   data () {
     return {
-      currentPage: 1,
-      itemsOnPage: 5,
-      isShowForm: false,
-      isShowContext: false,
-      id: null
+      // currentPage: 1,
+      // itemsOnPage: 5,
+      // isShowForm: false,
+      // isShowContext: false,
+      // id: null,
+      tableHeaders: [
+        { text: '#', value: 'id' },
+        { text: 'Date', value: 'date' },
+        { text: 'Category', value: 'category' },
+        { text: 'Value', value: 'price' }
+      ],
+      showMenu: false,
+      x: 0,
+      y: 0
     }
   },
   methods: {
-    showCurrentList (page) {
-      this.currentPage = page
-    },
-    showContext (e) {
-      this.id = +e.target.parentElement.childNodes[0].innerHTML
-      this.$context.show()
-    },
-    onShowContext () {
-      this.isShowContext = true
+    // showCurrentList (page) {
+    //   this.currentPage = page
+    // },
+    // showContext (e) {
+    //   this.id = +e.target.parentElement.childNodes[0].innerHTML
+    //   this.$context.show()
+    // },
+    // onShowContext () {
+    //   this.isShowContext = true
+    // },
+    show (event) {
+      event.preventDefault()
+      this.showMenu = false
+      this.x = event.clientX
+      this.y = event.clientY
+      this.$nextTick(() => {
+        this.showMenu = true
+      })
     }
   },
   computed: {
     ...mapGetters([
       'getPaymentsList'
-    ]),
-    currentList () {
-      return this.getPaymentsList.slice(this.itemsOnPage * (this.currentPage - 1), this.itemsOnPage * this.currentPage)
-    },
-    currentId () {
-      return { id: 2 }
-    }
-  },
-  mounted () {
-    this.$context.EventBus.$on('show', this.onShowContext)
-    // this.$context.EventBus.$on('close')
+    ])
+    // currentList () {
+    //   return this.getPaymentsList.slice(this.itemsOnPage * (this.currentPage - 1), this.itemsOnPage * this.currentPage)
+    // },
+    // currentId () {
+    //   return { id: 2 }
+    // }
   }
+  // mounted () {
+  //   this.$context.EventBus.$on('show', this.onShowContext)
+  //   // this.$context.EventBus.$on('close')
+  // }
 }
 </script>
 
-<style>
+<!--<style>
 
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
@@ -82,18 +93,18 @@ export default {
     opacity: 0;
   }
 
-</style>
+</style>-->
 
 <style module lang="sass">
-  .payment
-    display: grid
-    grid-template-columns: .4fr 2fr 2fr .5fr .2fr
-    border-bottom: 1px solid #e0e0e0
-    height: 40px
-    align-items: center
-    color: #345678
+  // .payment
+  //   display: grid
+  //   grid-template-columns: .4fr 2fr 2fr .5fr .2fr
+  //   border-bottom: 1px solid #e0e0e0
+  //   height: 40px
+  //   align-items: center
+  //   color: #345678
 
-    &:last-child
-      border: 0
+  //   &:last-child
+  //     border: 0
 
 </style>

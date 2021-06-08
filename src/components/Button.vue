@@ -1,5 +1,16 @@
 <template>
-  <button :class="[$style.btn]" @click="handler">{{ text }}</button>
+  <v-btn
+    @click="handler"
+    color="teal"
+    dark
+    small
+    depressed
+  >
+    {{ text }}
+    <v-icon dark small>
+      mdi-plus
+    </v-icon>
+  </v-btn>
 </template>
 
 <script>
@@ -20,21 +31,21 @@ export default {
 </script>
 
 <style module lang="sass">
-  .btn
-    width: 170px
-    align-self: flex-end
-    height: 32px
-    background-color: #66bcc7
-    border: 1px solid #66bcc7
-    border-radius: 3px
-    position: relative
-    color: white
-    outline: none
-    cursor: pointer
+  // .btn
+  //   width: 170px
+  //   align-self: flex-end
+  //   height: 32px
+  //   background-color: #66bcc7
+  //   border: 1px solid #66bcc7
+  //   border-radius: 3px
+  //   position: relative
+  //   color: white
+  //   outline: none
+  //   cursor: pointer
 
-    &::after
-      content: '+'
-      position: absolute
-      right: 12px
+  //   &::after
+  //     content: '+'
+  //     position: absolute
+  //     right: 12px
 
 </style>

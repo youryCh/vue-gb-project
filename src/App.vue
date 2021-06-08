@@ -1,20 +1,18 @@
 <template>
-  <div id="app">
-    <transition name="fade">
+  <v-app>
+    <!-- <transition name="fade">
       <Modal v-if="shown" :name="shown" :settings="settings" />
-    </transition>
-    <header :class="[$style.header]">
-      My personal costs
-      <div>
-        <router-link :class="[$style.routerLink]" to="/dashboard">Dashboard</router-link>
-        <router-link :class="[$style.routerLink]" to="/about">About</router-link>
-        <router-link :class="[$style.routerLink]" to="/404">404</router-link>
-      </div>
-    </header>
-    <main>
-      <router-view />
-    </main>
-  </div>
+    </transition> -->
+    <v-app-bar flat app>
+      <v-btn :ripple="false" plain to="/dashboard">Dashboard</v-btn>
+      <v-btn :ripple="false" plain to="/about">About</v-btn>
+      <v-btn :ripple="false" plain to="/404">404</v-btn>
+    </v-app-bar>
+    <v-main>
+      <div class="text-h4 my-4">My personal costs</div>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -23,7 +21,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
-    Modal: () => import('./components/modalWindow/Modal')
+    // Modal: () => import('./components/modalWindow/Modal')
   },
   data () {
     return {
@@ -59,39 +57,11 @@ export default {
 }
 </script>
 
-<style lang="sass" module>
-  *
-    margin: 0
-    padding: 0
-    font-family: sans-serif
-    box-sizing: border-box
-
-  .header
-    color: #234567
-    font-size: 24px
-    margin-bottom: 8px
-    display: flex
-    flex-direction: column
-
-  .routerLink
-    margin-right: 10px
-    font-size: 16px
-    color: #234567
-
-    &:hover
-      color: #66bcc7
-
-</style>
-
-<!-- сделал отдельный <style> т.к. :global похоже не работает с sass -->
 <style>
-
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }
-
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
-
 </style>
