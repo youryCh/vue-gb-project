@@ -1,28 +1,4 @@
 <template>
-  <!-- <div :class="[$style.paymentForm]">
-    <div :class="[$style.close]" @click="clearForm">x</div>
-    <input :class="[$style.paymentForm__input]" placeholder="Payment date" v-model="date">
-    <select :class="[$style.paymentForm__input]" v-model="category">
-      <option disabled selected value="">Payment category</option>
-      <option v-for="category in categoryName"
-      :key="category">
-      {{ category }}
-      </option>
-    </select>
-    <input :class="[$style.paymentForm__input]" placeholder="Payment amount" v-model.number="price">
-    <v-btn
-      @click="save"
-      color="teal"
-      dark
-      small
-      depressed
-    >
-      ADD
-      <v-icon dark small>
-        mdi-plus
-      </v-icon>
-    </v-btn>
-  </div> -->
   <form
     class="overflow-hidden pa-2 white"
   >
@@ -33,7 +9,7 @@
     </v-text-field>
     <v-select
       v-model="category"
-      :items="categoryName"
+      :items="getCategories"
       label="Payment category"
     >
     </v-select>
@@ -62,23 +38,15 @@
 </template>
 
 <script>
-// import Button from './Button'
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-  // components: {
-  // },
-  // props: {
-  //   data: Number
-  // },
   data () {
     return {
       id: null,
       date: '',
       category: '',
-      price: null,
-      categoryName: ['Food', 'Transport', 'Housing', 'Clothing', 'Education']
-      // edit: false
+      price: null
     }
   },
   methods: {
@@ -87,16 +55,6 @@ export default {
       'updatePaymentsList'
     ]),
     save () {
-      // if (this.data) {
-      //   const data2 = {
-      //     id: this.id,
-      //     date: this.date,
-      //     category: this.category,
-      //     price: this.price
-      //   }
-      //   this.updatePaymentsList(this.currentPayment(data2))
-      //   return
-      // }
       const data = {
         id: this.getPaymentsListLastId,
         date: this.date || this.getCurrentDate,
@@ -109,17 +67,13 @@ export default {
       this.date = ''
       this.category = ''
       this.price = null
-      // this.$modal.close()
     }
-    // currentPayment (id) {
-    //   const payment = this.getPaymentsList.filter(item => item.id === id)
-    //   return { ...payment[0] }
-    // }
   },
   computed: {
     ...mapGetters([
       'getPaymentsListLastId',
-      'getPaymentsList'
+      'getPaymentsList',
+      'getCategories'
     ]),
     getCurrentDate () {
       const today = new Date()
@@ -144,39 +98,10 @@ export default {
       this.category = category
       this.price = price
     }
-    // this.updatePaymentsList(this.currentPayment(this.data))
   }
 }
 </script>
 
-<style module lang="sass">
-  // .paymentForm
-  //   z-index: 10
-  //   display: flex
-  //   flex-direction: column
-  //   width: 40vw
-  //   max-width: 400px
-  //   position: fixed
-  //   left: 30vw
-  //   background-color: white
-  //   border: 1px solid #e0e0e0
-  //   border-radius: 5px
-  //   padding-left: 8px
-  //   padding-right: 8px
-  //   padding-bottom: 8px
-
-  //   &__input
-  //     height: 40px
-  //     border: 1px solid #e0e0e0
-  //     border-radius: 3px
-  //     margin-bottom: 10px
-  //     outline: none
-  //     padding: 8px
-  //     color: #6f6e6e
-
-  // .close
-  //   align-self: flex-end
-  //   color: #6f6e6e
-  //   cursor: pointer
+<style>
 
 </style>
