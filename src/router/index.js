@@ -17,11 +17,6 @@ const router = new Router({
       component: () => import('../page/PageAbout')
     },
     {
-      path: '/add/payment/:category*',
-      name: 'addPayment',
-      component: () => import('../components/PaymentForm')
-    },
-    {
       path: '*',
       name: 'NotFound',
       component: () => import('../page/Page404')
@@ -32,8 +27,7 @@ const router = new Router({
 const titles = {
   dashboard: 'Welcome to Dashboard',
   about: 'About us',
-  NotFound: 'Page not found!',
-  addPayment: 'Add payment'
+  NotFound: 'Page not found!'
 }
 
 router.afterEach((to, from) => {

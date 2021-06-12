@@ -1,26 +1,6 @@
 <template>
   <v-row>
     <v-col class="col-6">
-      <v-dialog
-        v-model="showForm"
-        width="350"
-      >
-        <template v-slot:activator="{ on }">
-          <v-btn
-            color="teal"
-            dark
-            small
-            depressed
-            v-on="on"
-          >
-            ADD NEW COST
-            <v-icon dark small>
-              mdi-plus
-            </v-icon>
-          </v-btn>
-        </template>
-        <PaymentForm />
-      </v-dialog>
       <PaymentsList />
     </v-col>
     <v-col class="pt-10 col-4">
@@ -31,19 +11,16 @@
 
 <script>
 import PaymentsList from '../components/PaymentsList'
-import PaymentForm from '../components/PaymentForm.vue'
 import Chart from '../components/Chart.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     PaymentsList,
-    PaymentForm,
     Chart
   },
   data () {
     return {
-      showForm: false,
       datacollection: null
     }
   },
