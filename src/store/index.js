@@ -66,12 +66,11 @@ export default new Vuex.Store({
       state.paymentsList.push(payload)
     },
     updatePaymentsList (state, payload) {
-      const newList = state.paymentsList
-      newList[payload.id] = payload
-      state.paymentsList = [...newList]
+      state.paymentsList = Object.assign({}, payload)
     },
     deletePayment (state, payload) {
-      state.paymentsList.splice(payload - 1, 1)
+      // state.paymentsList.splice(payload, 1)
+      state.paymentsList = Object.assign({}, payload)
     }
   },
   getters: {
