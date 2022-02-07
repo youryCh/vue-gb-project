@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+    <transition name="fade">
+      <Modal v-if="shown" :name="shown" :settings="settings" />
+    </transition>
     <header :class="[$style.header]">
       My personal costs
       <div>
@@ -16,15 +19,42 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 export default {
   name: 'App',
+  components: {
+    Modal: () => import('./components/modalWindow/Modal')
+  },
+  data () {
+    return {
+      shown: '',
+      settings: {}
+    }
+  },
   methods: {
     ...mapActions([
       'fetchData'
-    ])
+    ]),
+    onShow ({ name }) {
+      this.shown = name
+    },
+    onClose () {
+      this.shown = ''
+    },
+    onShowContext () {
+      this.showContext = true
+    }
   },
   created () {
     this.fetchData()
+  },
+  mounted () {
+    this.$modal.EventBus.$on('show', this.onShow)
+    this.$modal.EventBus.$on('close', this.onClose)
+  },
+  beforeDestroy () {
+    this.$modal.EventBus.$off('show', this.onShow)
+    this.$modal.EventBus.$off('close', this.onClose)
   }
 }
 </script>
@@ -50,5 +80,18 @@ export default {
 
     &:hover
       color: #66bcc7
+
+</style>
+
+<!-- сделал отдельный <style> т.к. :global похоже не работает с sass -->
+<style>
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
 
 </style>
