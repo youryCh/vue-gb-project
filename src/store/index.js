@@ -17,16 +17,14 @@ export default new Vuex.Store({
   },
   getters: {
     getPaymentsList: state => state.paymentsList,
-    getPaymentsListLastId: state => {
-      return state.paymentsList.length
-    }
+    getPaymentsListLastId: state => state.paymentsList.length
   },
   actions: {
     fetchData ({ commit }) {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           const items = []
-          for (let i = 0; i < 32; i++) {
+          for (let i = 0; i < 22; i++) {
             items.push({
               id: i,
               date: '12.05.2021',
@@ -35,7 +33,7 @@ export default new Vuex.Store({
             })
           }
           resolve(items)
-        }, 1000)
+        }, 0)
       })
         .then(res => {
           commit('setPaymentsListData', res)

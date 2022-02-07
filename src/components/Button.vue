@@ -30,6 +30,7 @@ export default {
     position: relative
     color: white
     outline: none
+    cursor: pointer
 
     &::after
       content: '+'

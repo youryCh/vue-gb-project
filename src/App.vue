@@ -2,42 +2,28 @@
   <div id="app">
     <header :class="[$style.header]">
       My personal costs
+      <div>
+        <router-link :class="[$style.routerLink]" to="/dashboard">Dashboard</router-link>
+        <router-link :class="[$style.routerLink]" to="/about">About</router-link>
+        <router-link :class="[$style.routerLink]" to="/404">404</router-link>
+      </div>
     </header>
     <main>
-      <Button @handler="isShowForm" :text="'ADD NEW COST'" />
-      <PaymentForm v-show="showForm" />
-      <PaymentsList />
+      <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import PaymentsList from './components/PaymentsList'
-import PaymentForm from './components/PaymentForm'
-import Button from './components/Button'
 import { mapActions } from 'vuex'
-
 export default {
   name: 'App',
-  components: {
-    PaymentsList,
-    PaymentForm,
-    Button
-  },
-  data () {
-    return {
-      showForm: false
-    }
-  },
   methods: {
     ...mapActions([
       'fetchData'
-    ]),
-    isShowForm () {
-      this.showForm = !this.showForm
-    }
+    ])
   },
-  mounted () {
+  created () {
     this.fetchData()
   }
 }
@@ -54,5 +40,15 @@ export default {
     color: #234567
     font-size: 24px
     margin-bottom: 8px
+    display: flex
+    flex-direction: column
+
+  .routerLink
+    margin-right: 10px
+    font-size: 16px
+    color: #234567
+
+    &:hover
+      color: #66bcc7
 
 </style>
