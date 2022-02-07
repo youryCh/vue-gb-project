@@ -1,1 +1,1 @@
-# vue-gb-project
+## Тестовый проект для изучения VueJS + vuex
