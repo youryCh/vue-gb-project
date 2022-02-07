@@ -1,28 +1,117 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Calculator />
+    <header :class="[$style.header]">
+      My personal costs
+    </header>
+    <main>
+      <Button @handler="isShowForm" :text="'ADD NEW COST'" />
+      <PaymentForm @add="dataAdd" v-show="showForm" />
+      <PaymentsList :items="paymentsList" />
+    </main>
   </div>
 </template>
 
 <script>
-import Calculator from './components/Calculator.vue'
+import PaymentsList from './components/PaymentsList'
+import PaymentForm from './components/PaymentForm'
+import Button from './components/Button'
 
 export default {
   name: 'App',
   components: {
-    Calculator
+    PaymentsList,
+    PaymentForm,
+    Button
+  },
+  data () {
+    return {
+      paymentsList: [],
+      showForm: false
+    }
+  },
+  methods: {
+    fetchData () {
+      return [
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        },
+        {
+          date: '12.05.2021',
+          category: 'Education',
+          price: 456
+        }
+      ]
+    },
+    dataAdd (data) {
+      this.paymentsList.push(data)
+    },
+    isShowForm () {
+      this.showForm = !this.showForm
+    }
+  },
+  created () {
+    this.paymentsList = this.fetchData()
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass" module>
+  *
+    margin: 0
+    padding: 0
+    font-family: sans-serif
+    box-sizing: border-box
+
+  .header
+    color: #234567
+    font-size: 24px
+    margin-bottom: 8px
+
 </style>
