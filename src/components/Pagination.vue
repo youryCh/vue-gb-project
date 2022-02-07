@@ -1,19 +1,23 @@
 <template>
   <div :class="[$style.pagination]">
-    <button @click="prevPage" :class="[$style.pagination__button]">{{ innerButton[0] }}</button>
-    <div :class="[$style.pagination__item]" v-for="(item, index) in pageCount"
-    :key="index"
-    @click="showCurrentList">
+    <button :class="[$style.pagination__button]" @click="onClick(currentPage - 1)">{{ innerButton[0] }}</button>
+    <div :class="{[$style.pagination__item]: true, [$style.pagination__item_active]: currentPage === item}"
+      v-for="(item, index) in pageAmount"
+      :key="index"
+      @click="onClick(item)">
     {{ item }}
     </div>
-    <button @click="nextPage" :class="[$style.pagination__button]">{{ innerButton[1] }}</button>
+    <button :class="[$style.pagination__button]" @click="onClick(currentPage + 1)">{{ innerButton[1] }}</button>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   props: {
-    listLength: Number
+    itemsOnPage: Number,
+    currentPage: Number
   },
   data () {
     return {
@@ -21,20 +25,19 @@ export default {
     }
   },
   methods: {
-    showCurrentList (event) {
-      const targetPage = event.target.innerHTML
-      this.$emit('currentList', targetPage)
-    },
-    prevPage () {
-      this.$emit('prevPage')
-    },
-    nextPage () {
-      this.$emit('nextPage')
+    onClick (page) {
+      if (page < 1 || page > this.pageAmount) {
+        return
+      }
+      this.$emit('currentList', page)
     }
   },
   computed: {
-    pageCount () {
-      return Math.ceil(this.listLength / 5)
+    ...mapGetters([
+      'getPaymentsListLastId'
+    ]),
+    pageAmount () {
+      return Math.ceil(this.getPaymentsListLastId / this.itemsOnPage)
     }
   }
 }
@@ -53,8 +56,12 @@ export default {
       margin: 0 10px
       color: #6f6e6e
 
+      &_active
+        color: #66bcc7
+
       &:hover
         color: #66bcc7
+        cursor: pointer
 
     &__button
       margin: 0 10px
@@ -65,5 +72,6 @@ export default {
 
       &:hover
         color: #66bcc7
+        cursor: pointer
 
 </style>

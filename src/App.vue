@@ -5,8 +5,8 @@
     </header>
     <main>
       <Button @handler="isShowForm" :text="'ADD NEW COST'" />
-      <PaymentForm @add="dataAdd" v-show="showForm" />
-      <PaymentsList :items="paymentsList" />
+      <PaymentForm v-show="showForm" />
+      <PaymentsList />
     </main>
   </div>
 </template>
@@ -15,6 +15,7 @@
 import PaymentsList from './components/PaymentsList'
 import PaymentForm from './components/PaymentForm'
 import Button from './components/Button'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'App',
@@ -25,79 +26,19 @@ export default {
   },
   data () {
     return {
-      paymentsList: [],
       showForm: false
     }
   },
   methods: {
-    fetchData () {
-      return [
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        },
-        {
-          date: '12.05.2021',
-          category: 'Education',
-          price: 456
-        }
-      ]
-    },
-    dataAdd (data) {
-      this.paymentsList.push(data)
-    },
+    ...mapActions([
+      'fetchData'
+    ]),
     isShowForm () {
       this.showForm = !this.showForm
     }
   },
-  created () {
-    this.paymentsList = this.fetchData()
+  mounted () {
+    this.fetchData()
   }
 }
 </script>

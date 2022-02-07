@@ -4,7 +4,6 @@
     <select :class="[$style.paymentForm__input]" v-model="category">
       <option disabled selected value="">Payment category</option>
       <option v-for="category in categoryName"
-      :value="category"
       :key="category">
       {{ category }}
       </option>
@@ -16,6 +15,7 @@
 
 <script>
 import Button from './Button'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -23,6 +23,7 @@ export default {
   },
   data () {
     return {
+      id: null,
       date: '',
       category: '',
       price: null,
@@ -30,13 +31,17 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'AddPaymentsListData'
+    ]),
     save () {
       const data = {
+        id: this.getPaymentsListLastId,
         date: this.date || this.getCurrentDate,
         category: this.category,
         price: this.price
       }
-      this.$emit('add', data)
+      this.AddPaymentsListData(data)
       this.clearForm()
       this.$parent.showForm = false
     },
@@ -47,6 +52,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'getPaymentsListLastId'
+    ]),
     getCurrentDate () {
       const today = new Date()
       const day = today.getDate()
